@@ -1,38 +1,51 @@
+<!-- src/components/Header.vue -->
 <template>
   <header class="header">
     <div class="header__brand">
-      <Hamburger/>
+      <!-- <Hamburger @click="onHamburgerClick" /> -->
       <span class="header__name">{{ name }} <b>Documentation</b></span>
     </div>
-    <Search/>
+    <Search />
   </header>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import Hamburger from './Hamburger.vue';
+import { defineComponent } from 'vue';
+// import Hamburger from './Hamburger.vue';
 import Search from './Search.vue';
 
 export default defineComponent({
   name: 'AppHeader',
   components: {
-    Hamburger,
+    // Hamburger,
     Search,
   },
-  setup() {
-    const name = ref('test')
+  setup(_, { emit }) {
+    const name = 'test';
+
+    const onHamburgerClick = () => {
+      emit('toggle-sidebar');
+    };
 
     return {
       name,
+      onHamburgerClick,
     };
-  }
+  },
 });
 </script>
 
 
-
-<style scoped>
+<!-- <style scoped>
 .header {
+  /* Add the following styles */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  /* Existing styles */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -42,19 +55,4 @@ export default defineComponent({
   color: rgb(255, 255, 255);
   background: rgb(25, 86, 255);
 }
-
-.header__name {
-  display: flex;
-}
-
-.header__name b {
-  margin-left: 5px;
-  font-weight: 800;
-}
-
-.header__brand {
-  display: flex;
-  flex: 1;
-  align-items: center;
-}
-</style>
+</style> -->

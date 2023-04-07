@@ -1,35 +1,72 @@
+<!-- src/App.vue -->
 <template>
-  <Header/>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
-  <Footer/>
+  <div id="app">
+    <Header @toggle-sidebar="toggleSidebar" />
+    <div class="main-container">
+      <Navigation
+        :is-sidebar-open="isNavOpen"
+        @link-clicked="toggleSidebar"
+        :items="tocItems"
+      />
+      <main>
+        <router-view v-if="!searchResultsVisible" />
+      </main>
+    </div>
+    <Footer />
+  </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-// import HelloWorld from './components/HelloWorld.vue';
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import { defineComponent, ref } from 'vue';
+import ConfigManager from './services/configManager'
+import Header from './components/Header.vue';
+import Navigation from './components/Navigation.vue';
+import Footer from './components/Footer.vue';
 
-@Options({
+export default defineComponent({
   components: {
-    // HelloWorld,
     Header,
-    Footer
+    Navigation,
+    Footer,
   },
-})
-export default class App extends Vue {}
+  setup() {
+    const isNavOpen = ref(false);
+    // const searchResultsVisible = ref(false);
+
+    const toggleSidebar = () => {
+      isNavOpen.value = !isNavOpen.value;
+    };
+
+    // console.log(ConfigManager.getPages())
+
+    return {
+      baseUrl: '',
+      isNavOpen,
+      tocItems: ConfigManager.getPages(),
+      content: [],
+      searchResultsVisible: false,
+      searchResults: null,
+      searchKeywords: null,
+      toggleSidebar
+    };
+  },
+});
 </script>
 
 <style>
 * {
   margin: 0px;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
   color: #2c3e50;
+}
+
+.main-container {
+  display: flex;
 }
 </style>

@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 
 
-<style scoped>
+<!-- <style scoped>
 .header__hamburger {
   width: 45px;
   height: 45px;
@@ -35,4 +35,4 @@ export default defineComponent({
   cursor: pointer;
   background: rgb(255, 255, 255);
 }
-</style>
+</style> -->

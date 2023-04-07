@@ -43,7 +43,7 @@ export default defineComponent({
 </script>
 
 
-<style scoped>
+<!-- <style scoped>
 .nav__search {
   position: relative;
   display: block;
@@ -71,4 +71,4 @@ export default defineComponent({
   height: 20px;
   cursor: pointer;
 }
-</style>
+</style> -->
