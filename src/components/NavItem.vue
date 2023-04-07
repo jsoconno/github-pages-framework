@@ -9,7 +9,7 @@
     >
       {{ item.label }}
     </router-link>
-    <div v-else class="nav-link" @click="onParentClicked">
+    <div v-else class="nav-link" @click="toggleCollapse">
       {{ item.label }}
       <ul class="nested-nav" v-show="isCollapsed">
         <nav-item
@@ -53,6 +53,7 @@ export default defineComponent({
     const toggleCollapse = () => {
       isCollapsed.value = !isCollapsed.value;
     };
+
 
     return {
       onLinkClicked,
