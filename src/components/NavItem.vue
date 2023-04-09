@@ -1,4 +1,3 @@
-<!-- src/components/NavItem.vue -->
 <template>
   <li class="nav-item">
     <router-link
@@ -9,7 +8,12 @@
     >
       {{ item.label }}
     </router-link>
-    <div v-else class="nav-link" @click="toggleCollapse">
+    <router-link
+      v-else
+      class="nav-link"
+      :to="item.to"
+      @click="toggleCollapse"
+    >
       {{ item.label }}
       <ul class="nested-nav" v-show="isCollapsed">
         <nav-item
@@ -19,7 +23,7 @@
           @link-clicked="onLinkClicked"
         />
       </ul>
-    </div>
+    </router-link>
   </li>
 </template>
 
@@ -53,7 +57,6 @@ export default defineComponent({
     const toggleCollapse = () => {
       isCollapsed.value = !isCollapsed.value;
     };
-
 
     return {
       onLinkClicked,

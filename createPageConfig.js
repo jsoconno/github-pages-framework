@@ -15,6 +15,8 @@ const headerNavigation = [
   },
 ];
 const landingPage = '/documentation';
+// const headerNavigation = [];
+// const landingPage = '';
 
 // Define the function to generate the page configuration
 function generatePageConfig() {
@@ -61,9 +63,9 @@ function generatePageConfig() {
 
       if (stat.isDirectory()) {
         const folderName = path.basename(filePath);
-        const folderRoute = `${parentRoute}/${folderName}`.replace(landingPage, '');
+        const folderRoute = folderName.replace(landingPage, '');
         const folderPage = {
-          route: folderRoute,
+          route: `/${folderRoute}`,
           name: folderName,
           description: '',
           icon: ['far', 'folder'],
@@ -137,6 +139,18 @@ function generatePageConfig() {
   };
   traverseDirectory(markdownPath, rootPage, rootRoute);
   pageConfig.pages.push(rootPage);
+
+  // const rootRoute = '/';
+  // const rootPage = {
+  //   route: rootRoute,
+  //   name: '',
+  //   description: '',
+  //   icon: '',
+  //   children: [],
+  //   tags: [],
+  // };
+  // traverseDirectory(markdownPath, rootPage, rootRoute);
+  // pageConfig.pages = rootPage.children;
 
   // Write the page configuration to the output file
   fs.writeFileSync(outputPath, JSON.stringify(pageConfig, null, 2));

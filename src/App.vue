@@ -31,6 +31,8 @@ export default defineComponent({
   },
   setup() {
     const isNavOpen = ref(false);
+    const tocItems = ConfigManager.getPages();
+    console.log(tocItems)
     // const searchResultsVisible = ref(false);
 
     const toggleSidebar = () => {
@@ -42,7 +44,7 @@ export default defineComponent({
     return {
       baseUrl: '',
       isNavOpen,
-      tocItems: ConfigManager.getPages(),
+      tocItems: tocItems,
       content: [],
       searchResultsVisible: false,
       searchResults: null,

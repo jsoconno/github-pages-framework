@@ -1,6 +1,6 @@
 <template>
   <div class="container" @scroll="handleScroll">
-    <Breadcrumb></Breadcrumb>
+    <!-- <Breadcrumb></Breadcrumb> -->
     <section class="banner" 
       :class="{ active: isActive }" 
       v-if="pageConfig && !pageConfig.tiles"
@@ -38,13 +38,13 @@
 <script>
 import ConfigManager from '../services/configManager'
 import VueMarkdown from 'vue-markdown'
-import Breadcrumb from '../components/Breadcrumb'
+// import Breadcrumb from '../components/Breadcrumb'
 import axios from 'axios'
 
 export default {
   components: {
     VueMarkdown,
-    Breadcrumb
+    // Breadcrumb
   },
   data () {
     return {

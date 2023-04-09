@@ -59,11 +59,13 @@ export default defineComponent({
   };
 
   // Recursive function to process nested navigation items
-  const processNavItems = (items: ConfigItem[], basePath = ''): NavItem[] => {
+  const processNavItems = (items: ConfigItem[], basePath = config.landingPage): NavItem[] => {
     return items.map((item: ConfigItem) => {
       const navItem: NavItem = { label: item.name, to: basePath + item.route };
       if (item.children) {
-        navItem.children = processNavItems(item.children, basePath + item.route);
+        console.log('this')
+        console.log(navItem)
+        navItem.children = processNavItems(item.children, navItem.to);
       }
       return navItem;
     });

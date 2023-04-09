@@ -1,3 +1,4 @@
+import { RouteRecordRaw } from 'vue-router';
 import pageConfig from '../pageConfig.json';
 import axios from 'axios';
 
@@ -31,7 +32,8 @@ const metaMap: { [key: string]: any } = {};
  * processElement - recursively walk through a given node and enrich it with some additional
  * properties
  */
-function processElement(node: Node, parent: Node | null) {
+ function processElement(node: Node, parent: Node | null) {
+
   node.path = node.route;
   if (!parent) {
     node.breadCrumb = [];
@@ -83,7 +85,6 @@ function processElement(node: Node, parent: Node | null) {
   };
 
   metaMap[node.path] = node.meta;
-  console.log(node.meta)
 }
 
 function generateRoutingConfig(baseConfig: any) {
@@ -92,6 +93,7 @@ function generateRoutingConfig(baseConfig: any) {
   for (const i in pages) {
     const element = pages[i];
     if ('route' in element) {
+      console.log(element)
       processElement(element, null);
     }
   }
@@ -109,9 +111,9 @@ export default {
     return metaMap[route];
   },
 
-  getRoutingConfig() {
+  getRoutingConfig(): RouteRecordRaw[] {
     const routingConfig = generateRoutingConfig(this.getBaseConfig());
-
+  
     return routingConfig;
   },
 
