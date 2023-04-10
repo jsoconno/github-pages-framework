@@ -19,8 +19,34 @@
       "icon": "address-book",
       "children": [
         {
-          "route": "/deeper",
-          "name": "deeper",
+          "route": "/faq",
+          "name": "Frequently Asked Questions",
+          "description": "A collection of frequently asked questions.",
+          "icon": [
+            "fas",
+            "question"
+          ],
+          "tags": [
+            "questions"
+          ],
+          "owner": "",
+          "markdown": "/static/markdown/FAQ.md"
+        },
+        {
+          "route": "/links",
+          "name": "Useful Links",
+          "description": "Helpful links that you will use often.",
+          "icon": [
+            "fas",
+            "link"
+          ],
+          "tags": [],
+          "owner": "",
+          "markdown": "/static/markdown/Links.md"
+        },
+        {
+          "route": "/Process",
+          "name": "Process",
           "description": "",
           "icon": [
             "far",
@@ -28,31 +54,62 @@
           ],
           "children": [
             {
-              "route": "/more-content",
-              "name": "some title",
+              "route": "/Process/Deeper",
+              "name": "Deeper",
               "description": "",
               "icon": [
-                "fas",
-                "poo"
+                "far",
+                "folder"
               ],
-              "tags": [],
+              "children": [
+                {
+                  "route": "/this is a really long name for a file to have",
+                  "name": "This Is A Really Long Name For A File To Have",
+                  "description": "How to install Visual Studio Code.",
+                  "icon": [
+                    "fas",
+                    "poo"
+                  ],
+                  "tags": [
+                    "install"
+                  ],
+                  "owner": "",
+                  "markdown": "/static/markdown/Process/Deeper/This Is A Really Long Name For A File To Have.md"
+                }
+              ],
+              "tags": []
+            },
+            {
+              "route": "/installing vs code",
+              "name": "Install VS Code",
+              "description": "How to install Visual Studio Code.",
+              "icon": [
+                "fas",
+                "computer"
+              ],
+              "tags": [
+                "install"
+              ],
               "owner": "",
-              "markdown": "/static/markdown/deeper/more-content.md"
+              "markdown": "/static/markdown/Process/Installing VS Code.md"
+            },
+            {
+              "route": "/raising a pull request in github",
+              "name": "Raise A Pull Request in Github",
+              "description": "Process documentation for how to raise a pull request in GitHub.",
+              "icon": [
+                "fab",
+                "github"
+              ],
+              "tags": [
+                "pull-request",
+                "code"
+              ],
+              "owner": "",
+              "markdown": "/static/markdown/Process/Raising a Pull Request In GitHub.md"
             }
           ],
           "tags": []
-        },
-        {
-          "route": "/home",
-          "name": "some title",
-          "description": "",
-          "icon": [
-            "fas",
-            "poo"
-          ],
-          "tags": [],
-          "owner": "",
-          "markdown": "/static/markdown/home.md"
         }
       ],
       "tags": []
