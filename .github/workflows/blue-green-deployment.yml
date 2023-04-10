@@ -1,3 +1,5 @@
+# This pipeline is set up for Blue-Green Deployment to GitHub Pages using two different branches.
+# The pipeline is triggered when a push event occurs on the main branch.
 name: Blue-Green Deployment
 
 on:
@@ -10,14 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: 18
 
+      # Deploy the application to GitHub Pages
       - name: Deploy App to GitHub Pages
         env:
           ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
@@ -33,7 +38,7 @@ jobs:
             target_branch="gh-pages-blue"
           fi
 
-          # Report back
+          # Report back the current and target branches
           echo The static site is current deployed to $current_branch.
           echo Targeting $target_branch for the deployment.
 
