@@ -1,6 +1,6 @@
 <template>
   <div class="container" @scroll="handleScroll">
-    <!-- <Breadcrumb></Breadcrumb> -->
+    <Breadcrumb></Breadcrumb>
     <section class="banner" 
       :class="{ active: isActive }" 
       v-if="pageConfig && !pageConfig.tiles"
@@ -8,7 +8,8 @@
     >
       <h2 class="banner__title">{{ pageConfig.name }}</h2>
       <h4 class="banner__text">{{ pageConfig.description }}</h4>
-      <p class="banner__timestamp">Last Modified: {{ formatTimestamp(lastModified) }}</p>
+      <!-- <p class="banner__timestamp">Last Modified: {{ formatTimestamp(lastModified) }}</p> -->
+      <p class="banner__timestamp">Last Modified: {{ lastModified }}</p>
 
     </section>
 
@@ -25,7 +26,7 @@
         :style="{ backgroundColor: tile.bgColor }"
       >
         <router-link :to="tile.path">
-          <font-awesome-icon class="card__icon" size="2x" :icon="tile.icon" v-if="tile.icon !== 'watson'"/>
+          <font-awesome-icon class="card__icon" size="2x" :icon="tile.icon"/>
           <h4 class="card__title">{{tile.name}}</h4>
           <p class="card__text">{{tile.description}}</p>
         </router-link>
@@ -38,72 +39,55 @@
 <script>
 import ConfigManager from '../services/configManager'
 import VueMarkdown from 'vue-markdown'
-import { ref } from 'vue'
-// import Breadcrumb from '../components/Breadcrumb'
+import Breadcrumb from '../components/Breadcrumb'
 import axios from 'axios'
 
 export default {
   components: {
     VueMarkdown,
-    // Breadcrumb
+    Breadcrumb
   },
-  setup() {
-    const markdown = ref('');
-    const lastModified = ref('');
-    const pageConfig = ref({});
-    const isActive = ref(false);
-    const container = ref(null);
-    const initialScroll = ref(false);
-    const isCommentOpen = ref(false);
-    const comment = ref('');
-    const likes = ref(0);
-    const dislikes = ref(0);
-    const tags = ref(null);
-
+  data () {
     return {
-      markdown,
-      lastModified,
-      pageConfig,
+      markdown: '',
+      lastModified: '',
+      pageConfig: {},
       tocItems: ConfigManager.getPages(),
-      isActive,
-      container,
-      initialScroll,
-      isCommentOpen,
-      comment,
-      likes,
-      dislikes,
-      tags,
-      // Other methods
-    };
+      isActive: false,
+      container: null,
+      initialScroll: false,
+      isCommentOpen: false,
+      comment: '',
+      likes: 0,
+      dislikes: 0,
+      tags: null
+    }
   },
-  mounted() {
-    console.log('mounted method called'); // Add this line
-    this.$nextTick(() => {
-      this.initialize(this.$route.path);
-      setTimeout(() => {
-        this.scrollTo(this.$route.hash);
-      }, 150);
+  mounted () {
+    this.initialize(this.$router.currentRoute.path)
+    setTimeout(() => {
+      this.scrollTo(this.$route.hash)
+    }, 150)
 
-      this.container = document.querySelector("main > .container");
-      if (this.container) {
-        this.container.addEventListener("scroll", () => {});
+    this.container = document.querySelector('main > .container')
+    if (this.container) {
+      this.container.addEventListener('scroll', () => {
+      })
+    }
+    console.log('this.container', this.container)
+    setTimeout(() => {
+      const iframes = document.querySelectorAll('iframe')
+      console.log('iframes', iframes)
+      for (let iframe of iframes) {
+        iframe.addEventListener('load', () => {
+          console.log('iframe LOADED')
+        })
+        console.log('iframe', iframe)
       }
-      console.log("this.container", this.container);
-      setTimeout(() => {
-        const iframes = document.querySelectorAll("iframe");
-        console.log("iframes", iframes);
-        for (let iframe of iframes) {
-          iframe.addEventListener("load", () => {
-            console.log("iframe LOADED");
-          });
-          console.log("iframe", iframe);
-        }
-      }, 150);
-    });
+    }, 150)
   },
   watch: {
     '$route' (to, from) {
-      console.log('hello')
       if (to.path !== from.path) {
         this.pageConfig = to.meta
         this.initialize()
@@ -131,27 +115,10 @@ export default {
     onLoadIFrame (event) {
       console.log('onload iframe', event)
     },
-    getLikes () {
-      let route = this.$router.currentRoute.path
-      axios.post(`https://merlin-playbook-api-dev.mybluemix.net/likes`, {
-        route
-      }).then(response => {
-        this.likes = response.data.likes
-      })
-    },
-    getDislikes () {
-      let route = this.$router.currentRoute.path
-      axios.post(`https://merlin-playbook-api-dev.mybluemix.net/dislikes`, {
-        route
-      }).then(response => {
-        this.dislikes = response.data.dislikes
-      })
-    },
     /**
      * initialize - called whenever the DefaultPageRenderer needs to re-initialize to render a specific page
      */
     initialize () {
-      console.log('initialize method called'); // Add this line
       this.tags = null
       if (!this.pageConfig.name) {
         let currentPath = this.$router.currentRoute.path
@@ -159,23 +126,8 @@ export default {
       }
 
       console.log('PAGECONFIG: ', this.tags)
-      console.log('Page Config:', this.pageConfig);
 
-      // post the visit to cloudant
-      let route = this.$router.currentRoute.path
-      axios.post(`https://merlin-playbook-api-dev.mybluemix.net/visit`, {
-        route
-      }).then(response => {
-        console.log('response', response)
-      })
-
-      this.getLikes()
-      this.getDislikes()
-
-      console.log('what')
-      console.log(this.pageConfig)
-
-      // load the markdown ressource from its static ressources
+      // load the markdown resource from its static resources
       this.markdown = ''
       if (this.pageConfig.markdown !== undefined) {
         const pathName = window.location.pathname
@@ -186,8 +138,6 @@ export default {
           this.lastModified = response.headers['last-modified']
           console.log(this.lastModified)
           this.markdown = response.data
-          console.log('markdown')
-          console.log(this.markdown)
         })
       }
     },
@@ -213,28 +163,24 @@ export default {
         this.initialScroll = true
       }
     },
-    formatTimestamp(timestamp) {
-      if (isNaN(Date.parse(timestamp))) {
-        return ''; // or return 'Invalid timestamp';
-      }
+    // formatTimestamp (timestamp) {
+    //   const date = new Date(timestamp)
+    //   const formattedDate = new Intl.DateTimeFormat(undefined, {
+    //     year: 'numeric',
+    //     month: 'long',
+    //     day: 'numeric',
+    //     hour: 'numeric',
+    //     minute: 'numeric',
+    //     second: 'numeric'
+    //   }).format(date)
 
-      const date = new Date(timestamp);
-      const formattedDate = new Intl.DateTimeFormat(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-      }).format(date);
-
-      return formattedDate;
-    }
+    //   return formattedDate
+    // }
   }
 }
 </script>
 
-<!-- <style scoped>
+<style scoped>
 .tags {
   margin-left: 1rem;
 }
@@ -258,4 +204,4 @@ export default {
 .tag:hover {
   background-color: #424242;
 }
-</style> -->
+</style>

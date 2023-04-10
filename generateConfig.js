@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 // Define the path to the markdown folder
-const markdownPath = path.join(__dirname, 'public', 'markdown');
+const markdownPath = path.join(__dirname, 'public', 'static', 'markdown');
 
 // Define the path to the output file
 const outputPath = path.join(__dirname, 'src', 'pageConfig.json');
@@ -15,8 +15,6 @@ const headerNavigation = [
   },
 ];
 const landingPage = '/documentation';
-// const headerNavigation = [];
-// const landingPage = '';
 
 // Define the function to generate the page configuration
 function generatePageConfig() {
@@ -63,15 +61,14 @@ function generatePageConfig() {
 
       if (stat.isDirectory()) {
         const folderName = path.basename(filePath);
-        const folderRoute = folderName.replace(landingPage, '');
+        const folderRoute = `${parentRoute}/${folderName}`.replace(landingPage, '');
         const folderPage = {
-          route: `/${folderRoute}`,
+          route: folderRoute,
           name: folderName,
           description: '',
           icon: ['far', 'folder'],
           children: [],
           tags: [],
-          markdown: `/markdown/${pageRoute}/main.md`,
         };
 
         traverseDirectory(filePath, folderPage, folderRoute);
@@ -88,7 +85,7 @@ function generatePageConfig() {
             description: '',
             icon: ['far', 'folder'],
             children: [],
-            markdown: `/markdown/${pageRoute}/main.md`,
+            markdown: `/public/markdown/${pageRoute}/main.md`,
           };
 
           // Add the page object to the page configuration
@@ -100,7 +97,7 @@ function generatePageConfig() {
 
         const pageName = path.basename(fileName, path.extname(fileName));
         const pageRoute = `${pageName}`.toLowerCase();
-        const markdownPath = filePath.replace(/.*\/markdown\//, "/public/markdown/");
+        const markdownPath = filePath.replace(/.*\/public\/markdown\//, "/public/markdown/");
 
         // Create the page object
         const page = {
@@ -137,22 +134,9 @@ function generatePageConfig() {
     icon: 'address-book',
     children: [],
     tags: [],
-    markdown: `/markdown${rootRoute}/main.md`,
   };
   traverseDirectory(markdownPath, rootPage, rootRoute);
   pageConfig.pages.push(rootPage);
-
-  // const rootRoute = '/';
-  // const rootPage = {
-  //   route: rootRoute,
-  //   name: '',
-  //   description: '',
-  //   icon: '',
-  //   children: [],
-  //   tags: [],
-  // };
-  // traverseDirectory(markdownPath, rootPage, rootRoute);
-  // pageConfig.pages = rootPage.children;
 
   // Write the page configuration to the output file
   fs.writeFileSync(outputPath, JSON.stringify(pageConfig, null, 2));

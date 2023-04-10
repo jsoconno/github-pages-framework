@@ -1,52 +1,48 @@
 <template>
-  <ul class="breadcrumb">
-    <li
-      v-for="(breadcrumb, idx) in breadcrumbList"
-      :key="idx"
-      @click="routeTo(breadcrumb.path)"
-      :class="{'linked': !!breadcrumb.link}">
-      <a href="javascript:void(0);">{{ breadcrumb.name }}</a>
-    </li>
-  </ul>
+    <ul class="breadcrumb">
+      <li
+        v-for="(breadcrumb, idx) in breadcrumbList"
+        :key="idx"
+        @click="routeTo(breadcrumb.path)"
+        :class="{'linked': !!breadcrumb.link}">
+
+        <a href="javascript:void(0);">{{ breadcrumb.name }}</a>
+
+      </li>
+    </ul>
 </template>
 
 <script>
-import { defineComponent, ref, watch, onMounted } from 'vue';
-import ConfigManager from '../services/configManager';
+import ConfigManager from '../services/configManager'
 
-export default defineComponent({
+export default {
   name: 'AppBreadcrumb',
-  setup() {
-    const breadcrumbList = ref([]);
-
-    const routeTo = (targetPath) => {
-      // console.log('shall route to ', targetPath);
-      this.$router.push(targetPath);
-      // if (this.breadcrumbList[pRouteTo].link) this.$router.push(this.breadcrumbList[pRouteTo].link);
-    };
-
-    const updateList = () => {
-      let currentPath = this.$router.currentRoute.path;
-      this.pageConfig = ConfigManager.getMetaById(currentPath);
+  data () {
+    return {
+      breadcrumbList: []
+    }
+  },
+  mounted () { this.updateList() },
+  watch: { '$route' () { this.updateList() } },
+  methods: {
+    routeTo (targetPath) {
+      // console.log('shall route to ', targetPath)
+      this.$router.push(targetPath)
+      // if (this.breadcrumbList[pRouteTo].link) this.$router.push(this.breadcrumbList[pRouteTo].link)
+    },
+    updateList () {
+      let currentPath = this.$router.currentRoute.path
+      this.pageConfig = ConfigManager.getMetaById(currentPath)
 
       // calculate the breadcrumb
-      // console.log('BreadCrumb ', JSON.stringify(this.pageConfig.breadCrumb));
-      breadcrumbList.value = this.pageConfig.breadCrumb;
-    };
-
-    onMounted(updateList);
-
-    watch(() => this.$route, updateList);
-
-    return {
-      breadcrumbList,
-      routeTo,
-    };
-  },
-});
+      // console.log('BreadCrumb ', JSON.stringify(this.pageConfig.breadCrumb))
+      this.breadcrumbList = this.pageConfig.breadCrumb
+    }
+  }
+}
 </script>
 
-<!-- <style scoped>
+<style scoped>
 
   ul.breadcrumb {
     position: sticky;
@@ -81,4 +77,4 @@ export default defineComponent({
     color: #01447e;
     text-decoration: underline;
   }
-</style> -->
+</style>

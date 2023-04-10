@@ -3,41 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "node createPageConfig.js && vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve",
+    "build": "npm run generate-config && node build/build.search.js && webpack --config webpack.prod.js",
+    "build-search": "node build/build.search.js",
     "lint": "vue-cli-service lint",
-    "create-page-config": "node createPageConfig.js"
+    "generate-config": "node generateConfig.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
+    "axios": "^0.21.1",
     "babel-runtime": "^6.26.0",
-    "core-js": "^3.8.3",
-    "vue": "^3.2.13",
-    "vue-class-component": "^8.0.0-0",
+    "core-js": "^3.30.0",
+    "normalize.css": "8.0.0",
+    "sass": "^1.61.0",
+    "sass-loader": "^13.2.2",
+    "vue": "^2.6.14",
     "vue-markdown": "^2.2.4",
-    "vue-router": "^4.0.13"
+    "vue-router": "^3.0.1",
+    "vue-tree-navigation": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
-    "@types/fs-extra": "^11.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.4.0",
-    "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-typescript": "^5.0.8",
     "@vue/cli-service": "~5.0.0",
-    "@vue/eslint-config-typescript": "^9.1.0",
-    "axios": "^1.3.5",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-minimizer-webpack-plugin": "^5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.3",
-    "vue3-markdown-it": "^1.0.10"
+    "html-webpack-plugin": "^5.5.0",
+    "remove-markdown": "^0.5.0",
+    "vue-template-compiler": "^2.6.14",
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-merge": "^5.8.0"
   },
   "eslintConfig": {
     "root": true,
@@ -45,19 +50,17 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended",
-      "@vue/typescript"
+      "plugin:vue/essential",
+      "eslint:recommended"
     ],
     "parserOptions": {
-      "parser": "@typescript-eslint/parser"
+      "parser": "@babel/eslint-parser"
     },
     "rules": {}
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead",
-    "not ie 11"
+    "not dead"
   ]
 }

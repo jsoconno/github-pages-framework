@@ -1,19 +1,18 @@
 <template>
-  <section>
-      <div class="footer">
-          Some footer content.
-      </div>
-  </section>
+    <section style="background-color:#ededed">
+        <div class="footer">
+            <b>Client Support Transformation</b> - Making our clients wildly successful
+        </div>
+    </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script>
 
-export default defineComponent({
+export default {
   name: 'AppFooter',
-})
+  data () {
+    return {
+    }
+  }
+}
 </script>
-
-<style scoped>
-
-</style>
