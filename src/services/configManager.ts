@@ -2,7 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 import pageConfig from '../pageConfig.json';
 import axios from 'axios';
 
-const DefaultPage = () => import('@/views/DefaultPage.vue');
+const DefaultPageRenderer = () => import('@/views/DefaultPageRenderer.vue');
 
 interface BreadCrumb {
   name: string;
@@ -52,7 +52,7 @@ const metaMap: { [key: string]: any } = {};
     path: parentPath,
   });
 
-  node.component = DefaultPage;
+  node.component = DefaultPageRenderer;
   if (parent != null) node.path = parent.path + node.route;
 
   const tiles: any[] = [];

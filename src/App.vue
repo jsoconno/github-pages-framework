@@ -10,6 +10,7 @@
       />
       <main>
         <router-view v-if="!searchResultsVisible" />
+        <vue3-markdown-it class="content" :source=markdown></vue3-markdown-it>
       </main>
     </div>
     <Footer />
@@ -22,18 +23,36 @@ import ConfigManager from './services/configManager'
 import Header from './components/Header.vue';
 import Navigation from './components/Navigation.vue';
 import Footer from './components/Footer.vue';
+import Vue3MarkdownIt from 'vue3-markdown-it';
+import axios from 'axios';
 
 export default defineComponent({
   components: {
     Header,
     Navigation,
     Footer,
+    Vue3MarkdownIt
   },
   setup() {
     const isNavOpen = ref(false);
     const tocItems = ConfigManager.getPages();
-    console.log(tocItems)
-    // const searchResultsVisible = ref(false);
+    
+    const tags = ref(null);
+    const markdown = ref('');
+
+    const pageConfig = ConfigManager.getMetaById(window.location.pathname) || {};
+
+    console.log('PAGECONFIG: ', tags)
+
+    if (pageConfig.markdown !== undefined) {
+      const path = pageConfig.markdown
+      tags.value = pageConfig.tags;
+      const config = { headers: { 'Cache-Control': 'no-cache' } };
+      axios.get(path, config).then(response => {
+        markdown.value = response.data;
+        console.log(markdown.value)
+      });
+    }
 
     const toggleSidebar = () => {
       isNavOpen.value = !isNavOpen.value;
@@ -45,6 +64,7 @@ export default defineComponent({
       baseUrl: '',
       isNavOpen,
       tocItems: tocItems,
+      markdown: markdown,
       content: [],
       searchResultsVisible: false,
       searchResults: null,

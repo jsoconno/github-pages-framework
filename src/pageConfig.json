@@ -19,30 +19,6 @@
       "icon": "address-book",
       "children": [
         {
-          "route": "/deeper",
-          "name": "deeper",
-          "description": "",
-          "icon": [
-            "far",
-            "folder"
-          ],
-          "children": [
-            {
-              "route": "/more-content",
-              "name": "some title",
-              "description": "",
-              "icon": [
-                "fas",
-                "poo"
-              ],
-              "tags": [],
-              "owner": "",
-              "markdown": "/static/markdown/deeper/more-content.md"
-            }
-          ],
-          "tags": []
-        },
-        {
           "route": "/home",
           "name": "some title",
           "description": "",
@@ -52,10 +28,11 @@
           ],
           "tags": [],
           "owner": "",
-          "markdown": "/static/markdown/home.md"
+          "markdown": "/public/markdown/home.md"
         }
       ],
-      "tags": []
+      "tags": [],
+      "markdown": "/markdown/documentation/main.md"
     }
   ]
 }
