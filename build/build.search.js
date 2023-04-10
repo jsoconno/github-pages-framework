@@ -31,8 +31,9 @@ const getContent = (page, parent) => {
       wordCount: 0,
       tags: page.tags
     }
+    console.log(page)
     if (page.markdown) {
-      let mdPath = path.join(__dirname, '..', 'public', page.markdown);
+      let mdPath = path.join(__dirname, '..', page.markdown);
       console.log(mdPath)
       fs.readFile(mdPath, 'utf8', (err, data) => {
         let text = removeMd(data);
@@ -74,7 +75,7 @@ const traversTree = (pages, parent) => {
 traversTree(pages)
   .then((PAGE_CONTENTS) => {
     fs.writeFile (
-      path.join('public/static/content.json'), 
+      path.join('static/content.json'), 
       JSON.stringify(PAGE_CONTENTS),
       (err) => {
         if (err) throw err;

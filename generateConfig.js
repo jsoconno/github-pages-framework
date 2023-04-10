@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 // Define the path to the markdown folder
-const markdownPath = path.join(__dirname, 'public', 'static', 'markdown');
+const markdownPath = path.join(__dirname, 'static', 'markdown');
 
 // Define the path to the output file
 const outputPath = path.join(__dirname, 'src', 'pageConfig.json');
@@ -97,7 +97,7 @@ function generatePageConfig() {
 
         const pageName = path.basename(fileName, path.extname(fileName));
         const pageRoute = `${pageName}`.toLowerCase();
-        const markdownPath = filePath.replace(/.*\/public\/markdown\//, "/public/markdown/");
+        const markdownPath = filePath.replace(/.*\/static\/markdown\//, "/static/markdown/");
 
         // Create the page object
         const page = {

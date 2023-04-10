@@ -26,6 +26,23 @@ Vue.filter('truncate', filter)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 
+// if ('serviceWorker' in navigator) {
+//   navigator.serviceWorker
+//     .register('/service-worker.js')
+//     .then(function() {
+//       console.log('Service Worker Registered');
+//     })
+//     .catch(function(error) {
+//       console.error('Failed to register Service Worker:', error);
+//     });
+// }
+
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker.register('/service-worker.js');
+//   });
+// }
+
 /* eslint-disable no-new */
 new Vue({
   router,

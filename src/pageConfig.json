@@ -30,7 +30,7 @@
             "questions"
           ],
           "owner": "",
-          "markdown": "/Users/justinoconnor/Code/github-pages-framework/public/static/markdown/FAQ.md"
+          "markdown": "/static/markdown/FAQ.md"
         },
         {
           "route": "/links",
@@ -42,7 +42,7 @@
           ],
           "tags": [],
           "owner": "",
-          "markdown": "/Users/justinoconnor/Code/github-pages-framework/public/static/markdown/Links.md"
+          "markdown": "/static/markdown/Links.md"
         },
         {
           "route": "/Process",
@@ -74,7 +74,7 @@
                     "install"
                   ],
                   "owner": "",
-                  "markdown": "/Users/justinoconnor/Code/github-pages-framework/public/static/markdown/Process/Deeper/This Is A Really Long Name For A File To Have.md"
+                  "markdown": "/static/markdown/Process/Deeper/This Is A Really Long Name For A File To Have.md"
                 }
               ],
               "tags": []
@@ -91,7 +91,7 @@
                 "install"
               ],
               "owner": "",
-              "markdown": "/Users/justinoconnor/Code/github-pages-framework/public/static/markdown/Process/Installing VS Code.md"
+              "markdown": "/static/markdown/Process/Installing VS Code.md"
             },
             {
               "route": "/raising a pull request in github",
@@ -106,7 +106,7 @@
                 "code"
               ],
               "owner": "",
-              "markdown": "/Users/justinoconnor/Code/github-pages-framework/public/static/markdown/Process/Raising a Pull Request In GitHub.md"
+              "markdown": "/static/markdown/Process/Raising a Pull Request In GitHub.md"
             }
           ],
           "tags": []
