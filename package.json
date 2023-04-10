@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "npm run generate-config && node build/build.search.js && webpack --config webpack.prod.js",
     "build-search": "node build/build.search.js",
-    "lint": "vue-cli-service lint",
     "generate-config": "node generateConfig.js",
+    "lint": "vue-cli-service lint",
     "gh-pages": "GH_PAGES=true npm run build; git add .; git commit -m 'Update GitHub Pages'; git subtree push --prefix dist origin $TARGET_BRANCH"
   },
   "dependencies": {
